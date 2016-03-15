@@ -102,7 +102,7 @@ spl_autoload_register(function ($className) {
 });
 
 
-if (DEV_MODE && false) {
+if (DEV_MODE) {
 	$_FRAMEWORK['error_log'] = array();
 	function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 		echo "de errno:".$errno.";errstr:".$errstr.";errfile:".$errfile.";errline:".$errline;
@@ -112,9 +112,9 @@ if (DEV_MODE && false) {
 		if ($var) {
 			echo "Oops; an error occured to such an extent that the operation had to stop, and a web page could not be sent to you.";
 			echo "<br /><br />DEV MODE IS ON:<br /><pre>";
-				print_r($var);
-			}
+			print_r($var);
 			echo "</pre>";
+		}
 	}
 	set_error_handler("exception_error_handler");
 	register_shutdown_function('framework_shutdown_function');
