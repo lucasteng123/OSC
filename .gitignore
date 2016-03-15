@@ -1,2 +1,2 @@
 # Do not push database config files
-config/*.ini
+config/database_mysql.ini
