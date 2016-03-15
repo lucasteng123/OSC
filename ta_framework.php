@@ -92,9 +92,8 @@ function framework_autoload($className) {
 	}
 	// Throw error if class still isn't loaded
 	if (!class_exists($className)) {
-		throw new FrameworkException (
-			"Autoload failed; no file or folder with the given classname (".$className.") was readable",
-			FrameworkException::AUTOLOAD
+		throw new Exception (
+			"Autoload failed; no file or folder with the given classname (".$className.") was readable"
 		);
 	}
 }
@@ -102,7 +101,30 @@ spl_autoload_register(function ($className) {
 	framework_autoload($className);
 });
 
+
+if (DEV_MODE && false) {
+	$_FRAMEWORK['error_log'] = array();
+	function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+		echo "de errno:".$errno.";errstr:".$errstr.";errfile:".$errfile.";errline:".$errline;
+	}
+	function framework_shutdown_function() {
+		$var = error_get_last();
+		if ($var) {
+			echo "Oops; an error occured to such an extent that the operation had to stop, and a web page could not be sent to you.";
+			echo "<br /><br />DEV MODE IS ON:<br /><pre>";
+				print_r($var);
+			}
+			echo "</pre>";
+	}
+	set_error_handler("exception_error_handler");
+	register_shutdown_function('framework_shutdown_function');
+}
+
+
+
+
 function framework_load_paths() { // throws FrameworkException
-	IncludePathHandler::add_include_path(FRAMEWORK_PATH.DIRECTORY_SEPARATOR."lib");
 	IncludePathHandler::add_include_path(FRAMEWORK_PATH.DIRECTORY_SEPARATOR."framework");
 }
+
+framework_load_paths();

@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Ensure non-existent file
+RewriteCond %{REQUEST_FILENAME} !-f
+# Ensure non-existent directory
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ ./index.php?ri=$1&host=%{HTTP_HOST} [NC]
