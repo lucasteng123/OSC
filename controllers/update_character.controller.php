@@ -10,6 +10,9 @@ $methods = array();
 $methods['run'] = function($instance) {
 	// Set headers
 	header('Content-Type: application/json');
+
+	// Get tools
+	$pdo = $instance->tools['con_manager']->get_connection();
 	
 	// Get URL variables
 	$r = $instance->route;
@@ -30,7 +33,7 @@ $methods['run'] = function($instance) {
 	WHERE c.id=:charid
 	";
 	// Prepare statement
-	$stmt = $this->pdo->prepare($sql);
+	$stmt = $pdo->prepare($sql);
 	// Bind values
 	$stmt->bindValue("charid",  $characterID,  PDO::PARAM_INT );
 	// Do the thing

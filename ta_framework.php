@@ -22,6 +22,13 @@ $pattern = '/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/';
 $webpath = "http://".$_SERVER['HTTP_HOST'].preg_replace($pattern,'',getcwd());
 define('WEB_PATH',$webpath);
 
+
+
+function issetor(&$var, $default = false) {
+	return isset($var) ? $var : $default;
+}
+
+
 /**
  * Stores a list of include paths, throwing an exception when paths are not found
  */
