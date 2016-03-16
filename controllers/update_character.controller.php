@@ -13,8 +13,41 @@ $methods['run'] = function($instance) {
 	
 	// Get URL variables
 	$r = $instance->route;
-	$characterID = $r[0];
-	$stationID   = $r[1];
+	$characterID = $r[0]; // TODO: check valid int
+	$stationID   = $r[1]; // TODO: check valid int
+
+
+	// === Modify character for visit === ///
+
+	// ... you'll need to do stuf here
+
+
+	// === Generate current character === //
+
+	$sql = "SELECT c.*, v.*, f.* FROM characters c
+	LEFT JOIN visits v ON v.character_ID=c.id
+	LEFT JOIN features f ON v.feature_ID=f.id
+	WHERE c.id=:charid
+	";
+	// Prepare statement
+	$stmt = $this->pdo->prepare($sql);
+	// Bind values
+	$stmt->bindValue("charid",  $characterID,  PDO::PARAM_INT );
+	// Do the thing
+	$stmt->execute();
+	// Fetch results into associative array
+	$result = array();
+	while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+		$result[] = $row;
+	}
+
+	// Print results to a temporary file for debugging
+	ob_start();
+		print_r($result);
+	file_put_contents("output.txt", ob_get_clean());
+
+	// ... you'll need to do something with the results to make the array
+	// that gets sent
 
 	// Generate testing data
 	$data2 = array(
