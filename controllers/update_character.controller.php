@@ -22,7 +22,18 @@ $methods['run'] = function($instance) {
 
 	// === Modify character for visit === ///
 
-	// ... you'll need to do stuf here
+	$notSureWhat = null; // what's the feature id?
+
+	$sql = "INSERT INTO visits (character_ID, feature_ID, date_posted)
+	VALUES (:charid, :featid, now())";
+	$stmt = $this->pdo->prepare($sql);
+	// Bind variables
+	$stmt->bindValue("charid", $characterID, PDO::PARAM_INT );
+	$stmt->bindValue("featid", $notSureWhat,  PDO::PARAM_INT );
+	// Insert the row
+	$stmt->execute();
+	// Get the id of what we just inserted
+	$idInserted = $this->pdo->lastInsertId();
 
 
 	// === Generate current character === //
