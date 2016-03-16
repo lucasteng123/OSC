@@ -26,14 +26,14 @@ $methods['run'] = function($instance) {
 
 	$sql = "INSERT INTO visits (character_ID, feature_ID, date_posted)
 	VALUES (:charid, :featid, now())";
-	$stmt = $this->pdo->prepare($sql);
+	$stmt = $pdo->prepare($sql);
 	// Bind variables
 	$stmt->bindValue("charid", $characterID, PDO::PARAM_INT );
 	$stmt->bindValue("featid", $notSureWhat,  PDO::PARAM_INT );
 	// Insert the row
 	$stmt->execute();
 	// Get the id of what we just inserted
-	$idInserted = $this->pdo->lastInsertId();
+	$idInserted = $pdo->lastInsertId();
 
 
 	// === Generate current character === //
