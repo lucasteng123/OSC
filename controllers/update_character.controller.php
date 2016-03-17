@@ -23,7 +23,7 @@ $methods['run'] = function($instance) {
 
 	$sql = "SELECT c.*, v.*, f.* FROM characters c
 	LEFT JOIN visits v ON v.character_ID=c.id
-	LEFT JOIN features f ON v.feature_ID=f.id
+	LEFT JOIN features f ON v.feature_ID=f.colFilter_ID
 	WHERE c.HEXid=:charid
 	";
 	// Prepare statement
