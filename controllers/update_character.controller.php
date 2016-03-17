@@ -21,9 +21,9 @@ $methods['run'] = function($instance) {
 
 	// === Generate current character === //
 
-	$sql = "SELECT c.*, v.*, f.* FROM characters c
-	LEFT JOIN visits v ON v.character_ID=c.id
-	LEFT JOIN features f ON v.feature_ID=f.colFilter_ID
+	$sql = "SELECT c.HEXid, c.pri_color, c.sec_color, v.id, f.sprite_filename FROM characters c
+	LEFT JOIN visits v ON v.character_ID=c.HEXid
+	LEFT JOIN features f ON v.feature_ID=f.HEXid
 	WHERE c.HEXid=:charid
 	";
 	// Prepare statement
