@@ -74,22 +74,11 @@ $methods['run'] = function($instance) {
 	// ... you'll need to do something with the results to make the array
 	// that gets sent
 
-	// Generate testing data
-	$data2 = array(
-		'id' => 12658,
-		'pri_color' => 120,
-		'sec_color' => 110,
-		'stage1' => "ffffff",
-		'stage2' => "ffffff",
-		'stage3' => "ffffff",
-		'stage4' => "ffffff",
-		'stage5' => "ffffff"
-	);
-	$option = 2; 
+	// Generate testing 
 
 	// Send data
 	ob_get_clean();
-	echo json_encode( $result );
+	echo json_encode( $result, JSON_FORCE_OBJECT );
 };
 
 $page_controller = new Controller($methods);
