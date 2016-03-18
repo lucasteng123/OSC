@@ -89,7 +89,7 @@ $methods['run'] = function($instance) {
 
 	// Send data
 	ob_get_clean();
-	echo json_encode( $data2 );
+	echo json_encode( $result );
 };
 
 $page_controller = new Controller($methods);
