@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS features
 
 CREATE TABLE IF NOT EXISTS visits
         (
+        id MEDIUMINT NOT NULL AUTO_INCREMENT,        
         date_posted datetime NOT NULL default '0000-00-00 00:00:00',
         current_state TINYINT,
         character_ID   char(6),
@@ -27,5 +28,5 @@ CREATE TABLE IF NOT EXISTS visits
         audio_path TEXT,
         FOREIGN KEY (character_ID)  REFERENCES characters(HEXid),
         FOREIGN KEY (feature_ID)      REFERENCES features(HEXid),
-        PRIMARY KEY (character_ID, current_state)
+        PRIMARY KEY (id)
         ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;

@@ -26,8 +26,7 @@ $methods['run'] = function($instance) {
 	// === Generate current character === //
 
 	// detect if there is a character already with this ID
-	$sql = "SELECT c.HEXid v.current_state FROM characters c
-	LEFT JOIN visits v ON v.character_ID=c.HEXid
+	$sql = "SELECT c.HEXid, FROM characters c
 	WHERE c.HEXid=:charid
 	";
 	// Prepare statement
@@ -40,7 +39,8 @@ $methods['run'] = function($instance) {
 	while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
 		$result[] = $row;
 	}
-	$current_state = count($result)+1;
+	echo print_r($result);
+	echo count($result);
 	//if there is no character with this ID, create it
 	if(count($result) < 1){
 		$sql = "INSERT INTO characters (HEXid, pri_color, sec_color, date_created)
@@ -55,6 +55,25 @@ $methods['run'] = function($instance) {
 		// Get the id of what we just inserted
 		$idInserted = $pdo->lastInsertId();
 	}
+
+
+	// ====== get amt of states ====== //
+	$sql = "SELECT v.id, FROM visits v
+	WHERE v.character_ID=:charid
+	";
+	// Prepare statement
+	$stmt = $pdo->prepare($sql);
+	// Bind values
+	$stmt->bindValue("charid",  $characterID,  PDO::PARAM_STR );
+	$stmt->execute();
+	// Fetch results into associative array
+	$result = array();
+	while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+		$result[] = $row;
+	}
+	$current_state = count($result)+1;
+
+
 
 	// === Modify character for visit === ///
 	$sql = "SELECT f.HEXid FROM features f
@@ -79,7 +98,7 @@ $methods['run'] = function($instance) {
 	$stmt = $pdo->prepare($sql);
 	// Bind variables
 	$stmt->bindValue("charid", $characterID, PDO::PARAM_STR);
-	$stmt->bindValue("featid", $stationID,  PDO::PARAM_STR);
+	$stmt->bindValue("featid", $feature_ID,  PDO::PARAM_STR);
 	$stmt->bindValue("state", $current_state,  PDO::PARAM_STR);
 	// Insert the row
 	$stmt->execute();

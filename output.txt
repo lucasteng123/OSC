@@ -1,0 +1,11 @@
+Array
+(
+    [0] => Array
+        (
+            [HEXid] => 000000
+            [pri_color] => 0
+            [sec_color] => 0
+            [sprite_filename] => 000002.png
+        )
+
+)
