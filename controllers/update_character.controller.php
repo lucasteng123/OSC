@@ -16,37 +16,20 @@ $methods['run'] = function($instance) {
 	
 	// Get URL variables
 	$r = $instance->route;
-	$characterID = $r[0]; // TODO: check valid int
-	$stationID   = $r[1]; // TODO: check valid int
-
-
-	// === Modify character for visit === ///
-
-	$notSureWhat = null; // what's the feature id?
-
-	$sql = "INSERT INTO visits (character_ID, feature_ID, date_posted)
-	VALUES (:charid, :featid, now())";
-	$stmt = $pdo->prepare($sql);
-	// Bind variables
-	$stmt->bindValue("charid", $characterID, PDO::PARAM_INT );
-	$stmt->bindValue("featid", $notSureWhat,  PDO::PARAM_INT );
-	// Insert the row
-	$stmt->execute();
-	// Get the id of what we just inserted
-	$idInserted = $pdo->lastInsertId();
-
+	$characterID = $r[0]; // TODO: check valid string
+	$stationID   = $r[1]; // TODO: check valid string
 
 	// === Generate current character === //
 
-	$sql = "SELECT c.*, v.*, f.* FROM characters c
-	LEFT JOIN visits v ON v.character_ID=c.id
-	LEFT JOIN features f ON v.feature_ID=f.id
-	WHERE c.id=:charid
+	$sql = "SELECT c.HEXid, c.pri_color, c.sec_color, v.id, f.sprite_filename FROM characters c
+	LEFT JOIN visits v ON v.character_ID=c.HEXid
+	LEFT JOIN features f ON v.feature_ID=f.HEXid
+	WHERE c.HEXid=:charid
 	";
 	// Prepare statement
 	$stmt = $pdo->prepare($sql);
 	// Bind values
-	$stmt->bindValue("charid",  $characterID,  PDO::PARAM_INT );
+	$stmt->bindValue("charid",  $characterID,  PDO::PARAM_STR );
 	// Do the thing
 	$stmt->execute();
 	// Fetch results into associative array
@@ -54,6 +37,34 @@ $methods['run'] = function($instance) {
 	while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
 		$result[] = $row;
 	}
+	if(count($result) < 1){
+		$sql = "INSERT INTO characters (HEXid, pri_color, sec_color, date_created)
+		VALUES (:HXid, :pricol, :seccol, now())";
+		$stmt = $pdo->prepare($sql);
+		// Bind variables
+		$stmt->bindValue("HXid", $characterID, PDO::PARAM_STR );
+		$stmt->bindValue("pricol", 0,  PDO::PARAM_INT );
+		$stmt->bindValue("seccol", 0,  PDO::PARAM_INT );
+		// Insert the row
+		$stmt->execute();
+		// Get the id of what we just inserted
+		$idInserted = $pdo->lastInsertId();
+	}
+
+	// === Modify character for visit === ///
+
+	$sql = "INSERT INTO visits (character_ID, feature_ID, date_posted)
+	VALUES (:charid, :featid, now())";
+	$stmt = $pdo->prepare($sql);
+	// Bind variables
+	$stmt->bindValue("charid", $characterID, PDO::PARAM_STR );
+	$stmt->bindValue("featid", $stationID,  PDO::PARAM_STR );
+	// Insert the row
+	$stmt->execute();
+	// Get the id of what we just inserted
+	$idInserted = $pdo->lastInsertId();
+
+
 
 	// Print results to a temporary file for debugging
 	ob_start();
