@@ -2,9 +2,46 @@ Array
 (
     [0] => Array
         (
-            [HEXid] => 000000
+            [HEXid] => 000001
             [pri_color] => 0
             [sec_color] => 0
+            [current_state] => 1
+            [sprite_filename] => 000002.png
+        )
+
+    [1] => Array
+        (
+            [HEXid] => 000001
+            [pri_color] => 0
+            [sec_color] => 0
+            [current_state] => 2
+            [sprite_filename] => 000002.png
+        )
+
+    [2] => Array
+        (
+            [HEXid] => 000001
+            [pri_color] => 0
+            [sec_color] => 0
+            [current_state] => 3
+            [sprite_filename] => 000000.png
+        )
+
+    [3] => Array
+        (
+            [HEXid] => 000001
+            [pri_color] => 0
+            [sec_color] => 0
+            [current_state] => 4
+            [sprite_filename] => 000000.png
+        )
+
+    [4] => Array
+        (
+            [HEXid] => 000001
+            [pri_color] => 0
+            [sec_color] => 0
+            [current_state] => 5
             [sprite_filename] => 000002.png
         )
 
