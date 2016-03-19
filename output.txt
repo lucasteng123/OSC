@@ -3,32 +3,8 @@ Array
     [1] => Array
         (
             [current_state] => 1
-            [sprite_filename] => 000001.png
-        )
-
-    [2] => Array
-        (
-            [current_state] => 2
-            [sprite_filename] => 000001.png
-        )
-
-    [3] => Array
-        (
-            [current_state] => 3
-            [sprite_filename] => 000001.png
-        )
-
-    [4] => Array
-        (
-            [current_state] => 4
-            [sprite_filename] => 000000.png
-        )
-
-    [5] => Array
-        (
-            [current_state] => 5
             [sprite_filename] => 000000.png
         )
 
 )
-img/bodies/000001.png
+img/bodies/000000.png

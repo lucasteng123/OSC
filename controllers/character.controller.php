@@ -46,33 +46,24 @@ $methods['run'] = function($instance) {
 
     $trans_colour = imagecolorallocatealpha($final_image, 0, 0, 0, 127);
     imagefill($final_image, 0, 0, $trans_colour);
-    $images = array();
-    for ($i=1; $i <= count($result); $i++) { 
-    	$images[] = imagecreatefrompng($states[$i] . $result[$i]["sprite_filename"]);
-    }
-	imagealphablending($images[0], true);
-	imagesavealpha($images[0], true);
-
-	for ($i=1; $i < count($images); $i++) { 
-		imagecopy($images[0], $images[$i], 0,0,0,0,50,50);
+    if (count($result) == 1) {
+    	 imagecopyresized($final_image, imagecreatefrompng($states[1] . $result[1]["sprite_filename"]), 0, 0, 0, 0, 400, 400, 50, 50);
+    } elseif (count($result) > 1) {
+	    $images = array();
+	    foreach ($result as $state => $file) {
+	    	$images[] = imagecreatefrompng($states[$state] . $file["sprite_filename"]);
+	    }	
+		imagealphablending($images[1], true);
+		imagesavealpha($images[1], true);
+		for ($i=2; $i < count($images); $i++) { 
+			imagecopy($images[1], $images[$i], 0,0,0,0,50,50);
+		}
+		imagecopyresized($final_image, $images[1], 0, 0, 0, 0, 400, 400, 50, 50);
+	} else {
+		
 	}
-	//imagecopy($image_1, $image_2, 0, 0, 0, 0, 50, 50);
-
-
-
-	imagecopyresized($final_image, $images[0], 0, 0, 0, 0, 400, 400, 50, 50);
-
 	imagepng($final_image);
 
-	
-
-	// Print results to a temporary file for debugging
-	ob_start();
-		print_r($result);
-		print($states[2]);
-		print($result[1]["sprite_filename"]);
-	file_put_contents("output.txt", ob_get_clean());
-	ob_get_clean();
 
 };
 
